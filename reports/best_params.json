@@ -1,0 +1,22 @@
+{
+  "Logistic Regression": {
+    "model__C": 0.0019517224641449498
+  },
+  "Decision Tree": {
+    "model__criterion": "entropy",
+    "model__max_depth": 10,
+    "model__min_samples_leaf": 177
+  },
+  "Random Forest": {
+    "model__max_depth": 10,
+    "model__max_features": 0.5,
+    "model__min_samples_leaf": 46
+  },
+  "Hist Gradient Boosting": {
+    "model__l2_regularization": 1.050619945159704,
+    "model__learning_rate": 0.06324877279506232,
+    "model__max_depth": 3,
+    "model__max_leaf_nodes": 49,
+    "model__min_samples_leaf": 23
+  }
+}
