@@ -154,32 +154,20 @@ feature group. Logistic Regression coefficients are scaled and strongly
 regularized by its tuned low `C`; neither coefficients nor importance imply
 causation.
 
-#### Pre-test validation decision
+#### Validation decision and test protocol
 
-The locked pre-test choice is the calibrated Random Forest with cost ratio
-3:1 and validation threshold **0.25**. At that threshold, validation
-precision is 0.523, recall is 0.590, and the confusion counts are TN=3,953,
-FP=714, FN=543, TP=783. Under the illustrative cost assumptions, validation
-cost is 0.391 per client versus 0.664 for approving everyone. These are
-validation estimates and hypothetical cost units, not realized financial
-savings or the project's final test results.
+The selected model is the calibrated Random Forest, with cost ratio 3:1 and
+validation threshold **0.25**. At that threshold, validation precision is
+0.523, recall is 0.590, and the confusion counts are TN=3,953, FP=714,
+FN=543, TP=783. Under the illustrative cost assumptions, validation cost is
+0.391 per client versus 0.664 for approving everyone. These are validation
+estimates and hypothetical cost units, not realized financial savings or the
+project's final test results.
 
-#### Limitations
-
-The dataset describes credit-card clients in Taiwan in 2005, so results may
-not generalize to other populations, periods, products, or lending policies.
-The target is the dataset's recorded next-month default label, not a guarantee
-of an individual's future default probability. The 3:1 false-negative to
-false-positive cost ratio is illustrative rather than based on a lender's
-measured losses. Excluding `sex` does not guarantee fairness: age, education,
-and marital status remain available and may act as proxies. No subgroup
-fairness evaluation was performed. This is an educational project and is not
-validated or suitable for real credit decisions.
-
-The test set is reserved for a single final evaluation with
-`evaluate_test.py`. The model, calibration, threshold, and illustrative
-business-cost assumptions were reviewed and locked before this one-time test
-evaluation. The script refuses to run again after a result is saved unless
+The model, calibration, threshold and cost ratio were chosen on the validation
+set and documented before the test set was scored. The test set was scored
+once. This order was self-enforced and not independently verifiable.
+`evaluate_test.py` refuses to run again after a result is saved unless
 `--force` is provided; do not use `--force` for model iteration. The
 `models/` directory is ignored by Git because it contains locally generated
 model artifacts. Only load joblib artifacts that you created and trust:
@@ -207,7 +195,9 @@ Validation versus test scores were similar: ROC-AUC 0.787 vs 0.776,
 PR-AUC 0.564 vs 0.561, precision 0.523 vs 0.505, recall 0.590 vs 0.572,
 and illustrative cost per client 0.391 vs 0.408. These cost values are
 hypothetical comparisons, not measured savings or estimates of real lender
-losses. The full command output is saved in `reports/final_test_output.txt`;
+losses. Against the illustrative "approve everyone" cost, the test cost is
+about 39% lower; this is not a real-world savings estimate. The full command
+output is saved in `reports/final_test_output.txt`;
 machine-readable metrics and confidence intervals are in
 `reports/final_test_results.json`.
 
